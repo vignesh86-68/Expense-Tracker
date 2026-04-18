@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: '/api' });
+const API = axios.create({
+  baseURL: 'https://expense-tracker-rkt8.onrender.com/api'
+});
 
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
