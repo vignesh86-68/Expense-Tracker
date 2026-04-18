@@ -31,30 +31,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())
 
-            // ✅ Enable CORS
-            .cors(cors -> {})
+                // ✅ Enable CORS
+                .cors(cors -> {
+                })
 
-            .authorizeHttpRequests(auth -> auth
-                // ✅ PUBLIC APIs
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/error").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated())
 
-                // 🔒 PROTECTED APIs
-                .anyRequest().authenticated()
-            )
+                // ✅ Stateless (JWT)
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // ✅ Stateless (JWT)
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+                // ✅ Authentication provider
+                .authenticationProvider(authenticationProvider())
 
-            // ✅ Authentication provider
-            .authenticationProvider(authenticationProvider())
-
-            // ✅ ADD JWT FILTER (VERY IMPORTANT)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                // ✅ ADD JWT FILTER (VERY IMPORTANT)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
