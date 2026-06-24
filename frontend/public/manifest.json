@@ -1,0 +1,18 @@
+{
+  "short_name": "ExpenseIQ",
+  "name": "ExpenseIQ — Smart Finance Tracker",
+  "description": "Track expenses, set budgets, and visualize your spending.",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#080c14",
+  "orientation": "portrait-primary"
+}
